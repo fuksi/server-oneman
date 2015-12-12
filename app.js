@@ -6,7 +6,26 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var students = require('./routes/students');
+
+// Db connection setup
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'asdfQWER1234',
+  database : 'oneman'
+});
+
+connection.connect();
+
+connection.query("SELECT * FROM courses;", function(err, rows, fields) {
+  if (err) throw err;
+  console.log(rows[0]);
+});
+
+connection.end();
+
 
 var app = express();
 
@@ -23,7 +42,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/students', students);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
