@@ -6,32 +6,21 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var students = require('./routes/students');
-
-// Db connection setup
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'asdfQWER1234',
-  database : 'oneman'
-});
-
-connection.connect();
-
-connection.query("SELECT * FROM courses;", function(err, rows, fields) {
-  if (err) throw err;
-  console.log(rows[0]);
-});
-
-connection.end();
-
+var simple = require('./routes/simple');
+var adhoc = require('./routes/adhoc');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+// Enable CORS
+/*app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});*/
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -42,7 +31,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/students', students);
+app.use('/simple', simple);
+app.use('/adhoc', adhoc);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
