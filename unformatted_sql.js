@@ -22,7 +22,7 @@ module.exports = {
 			attendanceSingleStudent: 'SELECT c.course_id, c.name, count(a.date) as count FROM attendance a INNER JOIN courses c ON a.course_id = c.course_id INNER JOIN students s ON a.student_id = s.student_id AND a.student_id = %i GROUP BY c.name %s;',
 			multipleCourseTotalOccurent: 'SELECT course_id, count(occurence_date) as count FROM course_schedule WHERE %s GROUP BY course_id %s;',
 			courseResultSingleStudent: 'SELECT c.course_id, c.name, e.grade FROM enrollment e INNER JOIN courses c ON e.course_id = c.course_id AND e.student_id = %i %s;',
-			singleCourseAttendanceAllStudents: 'SELECT s.student_id, s.first_name, s.last_name, count(a.date) FROM attendance a INNER JOIN students s ON s.student_id = a.student_id WHERE a.course_id = %i GROUP BY s.student_id %s;',
+			singleCourseAttendanceAllStudents: 'SELECT s.student_id, s.first_name, s.last_name, count(a.date) as count FROM attendance a INNER JOIN students s ON s.student_id = a.student_id WHERE a.course_id = %i GROUP BY s.student_id %s;',
 			singleCourseGradeAllStudents: 'SELECT s.student_id, s.first_name, s.last_name, e.grade FROM enrollment e INNER JOIN students s ON s.student_id = e.student_id WHERE e.course_id = %i GROUP BY s.student_id %s;',
 			numberOfCoursePerStudentLimited: 'SELECT s.student_id, s.first_name, s.last_name, count(e.course_id) as count FROM enrollment e INNER JOIN students s ON s.student_id = e.student_id WHERE %s GROUP BY e.student_id %s;',
 		},
